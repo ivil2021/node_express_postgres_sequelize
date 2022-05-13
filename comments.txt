@@ -1,0 +1,55 @@
+sudo npm install -g sequelize-cli
+
+npm install --save sequelize
+
+npm install --save pg pg-hstore
+
+sequelize init
+
+//---------- 13.05.2021 ----------//
+changed config.json to config.js and edited it
+created .env and fill it with data
+created env_example
+
+git init
+
+created .gitignore
+added .env to .gitignore
+
+npm i nodemon -D // flag -D to install it to devDependencies
+
+installed ENV dependency for vscode to hughlight syntaxis of env files
+
+
+sequelize model:create --name NewsList --attributes news_title:string, news_text:string, news_date:string
+
+------------------------
+
+При попытке сгенерировать структуру
+sequelize model:create --name NewsList --attributes news_title:string, news_text:string, news_date:string
+
+Выдает вот это:
+Debugger attached.
+
+Sequelize CLI [Node: 17.3.1, CLI: 6.4.1, ORM: 6.19.0]
+
+Опции:
+  --version          Показать номер версии                                                                                                                                                         [булевый тип]
+  --help             Показать помощь                                                                                                                                                               [булевый тип]
+  --env              The environment to run the command in                                                                                                         [строковой тип] [по умолчанию: "development"]
+  --config           The path to the config file                                                                                                                                                 [строковой тип]
+  --options-path     The path to a JSON file with additional options                                                                                                                             [строковой тип]
+  --migrations-path  The path to the migrations folder                                                                                                              [строковой тип] [по умолчанию: "migrations"]
+  --seeders-path     The path to the seeders folder                                                                                                                    [строковой тип] [по умолчанию: "seeders"]
+  --models-path      The path to the models folder                                                                                                                      [строковой тип] [по умолчанию: "models"]
+  --url              The database connection string to use. Alternative to using --config files                                                                                                  [строковой тип]
+  --debug            When available show various debug information                                                                                                           [булевый тип] [по умолчанию: false]
+  --name             Defines the name of the new model                                                                                                                              [строковой тип] [необходимо]
+  --attributes       A list of attributes                                                                                                                                           [строковой тип] [необходимо]
+  --force            Forcefully re-creates model with the same name                                                                                                                              [строковой тип]
+  --underscored      Use snake case for the timestamp's attribute names                                                                                                      [булевый тип] [по умолчанию: false]
+
+Неизвестные аргументы: news_text:string,, news_date:string
+Waiting for the debugger to disconnect...
+
+
