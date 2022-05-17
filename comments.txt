@@ -36,9 +36,9 @@ Sequelize CLI [Node: 17.3.1, CLI: 6.4.1, ORM: 6.19.0]
 Опции:
   --version          Показать номер версии                                                                                                                                                         [булевый тип]
   --help             Показать помощь                                                                                                                                                               [булевый тип]
-  --env              The environment to run the command in                                                                                                         [строковой тип] [по умолчанию: "development"]
-  --config           The path to the config file                                                                                                                                                 [строковой тип]
-  --options-path     The path to a JSON file with additional options                                                                                                                             [строковой тип]
+  --env              The environment to run the command in                                       [строковой тип] [по умолчанию: "development"]
+  --config           The path to the config file                                                 [строковой тип]
+  --options-path     The path to a JSON file with additional options                             [строковой тип]
   --migrations-path  The path to the migrations folder                                                                                                              [строковой тип] [по умолчанию: "migrations"]
   --seeders-path     The path to the seeders folder                                                                                                                    [строковой тип] [по умолчанию: "seeders"]
   --models-path      The path to the models folder                                                                                                                      [строковой тип] [по умолчанию: "models"]
@@ -52,4 +52,8 @@ Sequelize CLI [Node: 17.3.1, CLI: 6.4.1, ORM: 6.19.0]
 Неизвестные аргументы: news_text:string,, news_date:string
 Waiting for the debugger to disconnect...
 
-
+//---------- 17.05.2021 ----------//
+Если нужно откатить миграцию:
+- меняем структуру в models
+- sequelize-cli db:migrate:undo
+- делаем миграццию db:migrate
