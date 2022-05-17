@@ -21,11 +21,15 @@ app.use(express.urlencoded({ extended: false }));
 app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
 
-app.use('/', indexRouter);
+// app.use('/', indexRouter);
 
+//--- Adding news ---//
 //--- The first argument - path prefix. ---//
 //--- The second argument - router from routes/news (look at string 10 in this file). ---//
 app.use('/news', newsRouter);
+
+//--- Getting list of news ---//
+app.use('/', newsRouter);
 
 // catch 404 and forward to error handler
 app.use(function (req, res, next) {

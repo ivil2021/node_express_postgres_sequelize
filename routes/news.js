@@ -2,18 +2,22 @@ var express = require('express');
 var router = express.Router();
 
 var addNews = require('../controllers/addNews');
+var getNewsList = require('../controllers/getNewsList');
 
-//--- Route for getting news. ---//
-router.get('/', function (req, res, next) { // get https:/localhost:300/news
-  res.render('index', { title: 'Express' }); // get news list
-});
-
-// The first argument - path.
-// The second argument - adding news function from controllers.
+//--- Route for adding news. ---//
 router.post('/', addNews); // post https:/localhost:300/news
-//delete  https:/localhost:300/news/:id
-//update https:/localhost:300/news/:id
+
+//--- Route for getting list of news. ---//
+router.get('/', getNewsList);
+
+// router.get('/:id', getNewsList);
 
 module.exports = router;
 
 // https:/localhost:300/news
+
+//delete  https:/localhost:300/news/:id
+//update https:/localhost:300/news/:id
+
+// The first argument - path.
+// The second argument - adding news function from controllers.
