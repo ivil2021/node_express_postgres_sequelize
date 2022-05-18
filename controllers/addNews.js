@@ -6,9 +6,9 @@ const NewsList = require('../models').NewsList;
 const addNews = async (req, res) => {
   //--- Simple data validation (fields shouldn't be empty). ---//
   if (
-    req.body.news_title == '' ||
-    req.body.news_text == '' ||
-    req.body.news_date == ''
+    req.body.news_title === '' ||
+    req.body.news_text === '' ||
+    req.body.news_date === ''
   ) {
     //--- Sending message in case of invalid data ---//
     res.status(400).send('Icrorrect data');
