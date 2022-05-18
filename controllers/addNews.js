@@ -1,5 +1,3 @@
-// const req = require('express/lib/request');
-
 //--- Adding news function from models. ---//
 const NewsList = require('../models').NewsList;
 

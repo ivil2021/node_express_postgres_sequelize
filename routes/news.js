@@ -4,6 +4,7 @@ var router = express.Router();
 var addNews = require('../controllers/addNews');
 var getNewsList = require('../controllers/getNewsList');
 var getOneNews = require('../controllers/getOneNews');
+var findByTitle = require('../controllers/findByTitle');
 
 // ЭТО РОУТЫ УРОВНЯ МАРШРУТИЗАЦИИ
 // ЗДЕСЬ ПРОПИСЫВАЕМ РОУТ ДЛЯ КАЖДОЙ ОПЕРАЦИИ
@@ -15,6 +16,11 @@ router.post('/', addNews); // post https:/localhost:300/news
 
 //--- Route for getting list of news. ---//
 router.get('/', getNewsList);
+
+//--- Route for finding one news by title. ---//
+// NEED TO MOVE IT UP AND ADD MORE SPECIFIC PREFIX I DO NOT UNDERSTRAND WHY
+router.get('/find-by-title/:title', findByTitle);
+// NEED TO MOVE IT UP AND ADD MORE SPECIFIC PREFIX I DO NOT UNDERSTRAND WHY
 
 //--- Route for getting one news by id. ---//
 router.get('/:id', getOneNews);
