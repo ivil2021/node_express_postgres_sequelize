@@ -89,3 +89,6 @@ git checkout -b findByTitle // создать новую ветку findByTitle 
 // +ПОЛУЧЕНИЕ СПИСКА НОВОСТЕЙ
 // +ПОЛУЧЕНИЕ НОВОСТИ ПО ЗАГОЛОВКУ
 // +ПОЛУЧЕНИЕ НОВОСТИ ПО ID
+
+
+git checkout -b deleteById
