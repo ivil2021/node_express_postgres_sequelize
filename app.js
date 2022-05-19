@@ -6,7 +6,7 @@ var logger = require('morgan');
 
 var indexRouter = require('./routes/index');
 
-//--- Router for adding news. ---//
+//--- Router for working wiyh news. ---//
 var newsRouter = require('./routes/news');
 
 var app = express();
@@ -21,22 +21,10 @@ app.use(express.urlencoded({ extended: false }));
 app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
 
-// middleware app level
-// app.use('/', indexRouter);
-
-// НАМ НЕ НУЖНЫ ДРУГИЕ РОУТЫ УРОВНЯ ПРИЛОЖЕНИЯ КРОМЕ
+// We don't need other routes of application level accept.
 // app.use('/news', newsRouter);
-// ВСЕ ДЕЙСТВИЯ ДЕЛАЕМ В ЭТОМ РОУТЕ
-// ДОБАВЛЕНИЕ ОДНОЙ НОВОСТИ, ПОЛУЧЕНИЕ СПИСКА НОВОСТЕЙ, ПОЛУЧЕНИЕ ОДНОЙ НОВОСТИ ПО ID,
-// УДАЛЕНИЕ НОВОСТИ, ПОИСК НОВОСТИ ПО ЗАГОЛОВКУ, РЕДАКТИРОВАНИЕ НОВОСТИ
-// WE DON'T NEED OTHER ROUTES
-//--- Adding news ---//
-//--- The first argument - path prefix. ---//
-//--- The second argument - router from routes/news (look at string 10 in this file). ---//
+// We should use it for all actions with news.
 app.use('/news', newsRouter);
-
-// //--- Getting list of news ---//
-// app.use('/', newsRouter);
 
 // catch 404 and forward to error handler
 app.use(function (req, res, next) {
