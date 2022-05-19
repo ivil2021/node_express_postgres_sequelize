@@ -1,4 +1,4 @@
-//--- Getting one news by title. ---//
+//--- If there is a query - use query, otherwise - get list of news. ---//
 const { Op } = require('sequelize');
 
 const NewsList = require('../models').NewsList;

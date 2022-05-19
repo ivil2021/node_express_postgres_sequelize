@@ -6,7 +6,7 @@ var logger = require('morgan');
 
 var indexRouter = require('./routes/index');
 
-//--- Router for adding news. ---//
+//--- Router for working wiyh news. ---//
 var newsRouter = require('./routes/news');
 
 var app = express();
@@ -21,14 +21,10 @@ app.use(express.urlencoded({ extended: false }));
 app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
 
-// НАМ НЕ НУЖНЫ ДРУГИЕ РОУТЫ УРОВНЯ ПРИЛОЖЕНИЯ КРОМЕ
+// We don't need other routes of application level accept.
 // app.use('/news', newsRouter);
-// ВСЕ ДЕЙСТВИЯ, КАСАЮЩИЕСЯ НОВОСТЕЙ, ДЕЛАЕМ В ЭТОМ РОУТЕ
-// WE DON'T NEED OTHER ROUTES
+// We should use it for all actions with news.
 app.use('/news', newsRouter);
-
-// //--- Getting list of news ---//
-// app.use('/', newsRouter);
 
 // catch 404 and forward to error handler
 app.use(function (req, res, next) {
