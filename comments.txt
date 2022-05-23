@@ -92,3 +92,10 @@ git checkout -b findByTitle // создать новую ветку findByTitle 
 
 
 git checkout -b deleteById
+
+//---------- 23.05.2021 ----------//
+ОБНОВЛЕНИЕ ОДНОЙ НОВОСТИ
+Создаю контроллер updateOneNews
+Создаю новый роут в роутах router.put('/:id', updateOneNews) и в нем же вверху
+прописываю импорт let updateOneNews = require('../controllers/updateOneNews');
+Создаю в постмане новый пут запрос

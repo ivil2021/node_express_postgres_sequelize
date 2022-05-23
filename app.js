@@ -1,15 +1,15 @@
-var createError = require('http-errors');
-var express = require('express');
-var path = require('path');
-var cookieParser = require('cookie-parser');
-var logger = require('morgan');
+let createError = require('http-errors');
+let express = require('express');
+let path = require('path');
+let cookieParser = require('cookie-parser');
+let logger = require('morgan');
 
-var indexRouter = require('./routes/index');
+let indexRouter = require('./routes/index');
 
 //--- Router for working wiyh news. ---//
-var newsRouter = require('./routes/news');
+let newsRouter = require('./routes/news');
 
-var app = express();
+let app = express();
 
 // view engine setup
 app.set('views', path.join(__dirname, 'views'));
@@ -21,8 +21,8 @@ app.use(express.urlencoded({ extended: false }));
 app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
 
-// We don't need other routes of application level accept.
-// app.use('/news', newsRouter);
+// We don't need other routes of application level accept
+// app.use('/news', newsRouter).
 // We should use it for all actions with news.
 app.use('/news', newsRouter);
 

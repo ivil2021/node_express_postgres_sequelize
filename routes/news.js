@@ -1,10 +1,11 @@
-var express = require('express');
-var router = express.Router();
+let express = require('express');
+let router = express.Router();
 
-var addNews = require('../controllers/addNews');
-var getOneNews = require('../controllers/getOneNews');
-var findByTitle = require('../controllers/findByTitle');
-var deleteOneNews = require('../controllers/deleteOneNews');
+let addNews = require('../controllers/addNews');
+let getOneNews = require('../controllers/getOneNews');
+let findByTitle = require('../controllers/findByTitle');
+let deleteOneNews = require('../controllers/deleteOneNews');
+let updateOneNews = require('../controllers/updateOneNews');
 
 // Here there are routes of routing level.
 // We should place here all routes for different actions with news.
@@ -25,7 +26,8 @@ router.get('/:id', getOneNews);
 // http://localhost:3000/news/10
 router.delete('/:id', deleteOneNews);
 
-module.exports = router;
+//--- Route for updating one news by id. ---//
+// http://localhost:3000/news/34
+router.put('/:id', updateOneNews);
 
-//delete  https:/localhost:300/news/:id
-//update https:/localhost:300/news/:id
+module.exports = router;
