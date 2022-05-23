@@ -99,3 +99,15 @@ git checkout -b deleteById
 Создаю новый роут в роутах router.put('/:id', updateOneNews) и в нем же вверху
 прописываю импорт let updateOneNews = require('../controllers/updateOneNews');
 Создаю в постмане новый пут запрос
+
+
+
+
+git checkout -b pagination
+
+
+
+--------------------------------
+-*------------------------------
+readme.md
+https://github.com/Kazakova-A/game-api

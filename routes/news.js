@@ -6,6 +6,7 @@ let getOneNews = require('../controllers/getOneNews');
 let findByTitle = require('../controllers/findByTitle');
 let deleteOneNews = require('../controllers/deleteOneNews');
 let updateOneNews = require('../controllers/updateOneNews');
+const pagination = require('../middleware/pagination');
 
 // Here there are routes of routing level.
 // We should place here all routes for different actions with news.
@@ -17,7 +18,10 @@ router.post('/', addNews);
 //--- NEED TO MOVE IT UP AND ADD MORE SPECIFIC PREFIX. ---//
 // http://localhost:3000/news/find-by-title (without query)
 // http://localhost:3000/news/find-by-title?title=hot (with query - title = hot)
-router.get('/find-by-title', findByTitle);
+
+
+// router.get('/find-by-title', findByTitle);
+router.get('/find-by-title', pagination, findByTitle);
 
 //--- Route for getting one news by id. ---//
 router.get('/:id', getOneNews);
