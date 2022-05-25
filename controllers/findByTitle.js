@@ -1,53 +1,55 @@
 //--- If there is a query - use query, otherwise - get list of news. ---//
 const { Op } = require('sequelize');
-const { sequelize } = require('../models');
 
+const { sequelize } = require('../models');
 const NewsList = require('../models').NewsList;
 
 const findByTitle = async (req, res) => {
   try {
-    console.log('======================', req.pagination);
-    const page = req.pagination.page;
-    const limit = req.pagination.limit;
-    const offset = req.pagination.offset;
+    // TODO: to delete after final check
+    // console.log('======================', req.pagination);
+    // const page = req.pagination.page;
+    // const limit = req.pagination.limit;
+    // const offset = req.pagination.offset;
+    const { page, limit, offset } = req.pagination;
 
     // TODO: TO UNDERSTAND
     // 1 OPTION
-    const title = req.query.title;
-    const condition = title
-      ? { news_title: { [Op.iLike]: `%${title}%` } }
-      : null;
-    const news = await NewsList.findAll({ where: condition });
+    ////////////////////////////////
+    // const title = req.query.title;
+    // const condition = title ? { news_title: { [Op.iLike]: `%${title}%` } } : null;
+    // const news = await NewsList.findAll({ where: condition });
     // res.status(200).send(news);
-
-    console.log('it works');
-
-    ///////////////////////////////////////////////
-    // const currentNews = await NewsList.findAll({ where: condition });
+    ////////////////////////////////
 
     const query = `
-                SELECT *
-                FROM "NewsList"
-                ORDER BY "NewsList"."id"
-                LIMIT ${req.pagination.limit}
-                OFFSET ${req.pagination.offset};
-        `;
+      SELECT *
+      FROM "NewsList"
+      ORDER BY "NewsList"."id"
+      LIMIT ${req.pagination.limit}
+      OFFSET ${req.pagination.offset};
+    `;
 
-    const requestedNews = await sequelize.query(query);
-    const asdas = {page, limit, offset, ...requestedNews[0]};
+    const title = req.query.title;
+    let requestedNews;
+    let result;
 
-    // res.status(200).send(requestedNews[0]);
-    res.status(200).send(asdas);
-    ///////////////////////////////////////////////
+    if (title) {
+      // const condition = title ? { news_title: { [Op.iLike]: `%${title}%` } } : null;
+      const condition = { news_title: { [Op.iLike]: `%${title}%` } };
+      requestedNews = await NewsList.findAll({ where: condition });
+      res.status(200).send(requestedNews);
+      // } else {
+    }
+    requestedNews = await sequelize.query(query);
+    // TODO: to ask Arina about zero element of array requestedNews[0]
+    result = { page, limit, offset, ...requestedNews[0] };
+    res.status(200).send(result);
+    // }
 
-    // const limit = 3;
-    // console.log('limit:', limit);
-
-    // let newsAmount = news.length;
-    // console.log('newsAmount:', newsAmount);
-
-    // let totalPages = Math.ceil(newsAmount / limit);
-    // console.log('totalPages:', totalPages);
+    // const requestedNews = await sequelize.query(query);
+    // const result = {page, limit, offset, ...requestedNews[0]};
+    // res.status(200).send(result);
 
     // TODO: TO UNDERSTAND
     // 2 OPTION

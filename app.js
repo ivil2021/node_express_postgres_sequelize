@@ -6,10 +6,10 @@ const logger = require('morgan');
 const bodyParser = require('body-parser');
 const indexRouter = require('./routes/index');
 
-//--- Router for working wiyh news. ---//
-let newsRouter = require('./routes/news');
+//--- Router for working with news. ---//
+const newsRouter = require('./routes/news');
 
-let app = express();
+const app = express();
 
 // view engine setup
 app.set('views', path.join(__dirname, 'views'));
