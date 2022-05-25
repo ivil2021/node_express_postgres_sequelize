@@ -99,3 +99,59 @@ git checkout -b deleteById
 Создаю новый роут в роутах router.put('/:id', updateOneNews) и в нем же вверху
 прописываю импорт let updateOneNews = require('../controllers/updateOneNews');
 Создаю в постмане новый пут запрос
+
+
+
+
+git checkout -b pagination
+
+
+
+--------------------------------
+-*------------------------------
+readme.md
+https://github.com/Kazakova-A/game-api
+
+
+README.md
+Visual Studio Code имеет возможность редактировать и просматривать изменения MD файла.
+Поскольку VS Code не зависит от платформы, это будет работать для Windows, Mac и Linux.
+
+Для переключения между видами нажмите Ctrl + Shift + V в редакторе.
+Вы можете просматривать предварительный просмотр бок о бок (Ctrl + KV) с файлом,
+который вы редактируете, и видеть изменения, отраженные в режиме реального времени
+при редактировании.
+
+//--------------------------//
+heroku
+
+
+vpn
+https://protonvpn.com/support/linux-ubuntu-vpn-setup/
+
+https://protonvpn.com/ru/free-vpn/linux
+
+https://devcenter.heroku.com/articles/heroku-cli#install-the-heroku-cli
+npm install -g heroku
+heroku --help
+смотрим что версия хероку отображается
+heroku login
+heroku create
+after creating referencies we need to go to heroku dashboard
+type heroku dashboard in google
+go to https://dashboard.heroku.com/apps
+choose the reference you need and go to deploy
+
+in my project type:
+git add .
+git commit -m "..."
+
+after take a string from heroku dashboard something like heroku git:remote -a salty-fjord-65228
+
+git push heroku master
+
+at the end we need to push the reference or type heroku open
+heroku open 
+
+
+

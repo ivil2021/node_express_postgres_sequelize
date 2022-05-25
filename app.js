@@ -1,21 +1,27 @@
-let createError = require('http-errors');
-let express = require('express');
-let path = require('path');
-let cookieParser = require('cookie-parser');
-let logger = require('morgan');
+const createError = require('http-errors');
+const express = require('express');
+const path = require('path');
+const cookieParser = require('cookie-parser');
+const logger = require('morgan');
+const bodyParser = require('body-parser');
+const indexRouter = require('./routes/index');
 
-let indexRouter = require('./routes/index');
+//--- Router for working with news. ---//
+const newsRouter = require('./routes/news');
 
-//--- Router for working wiyh news. ---//
-let newsRouter = require('./routes/news');
-
-let app = express();
+const app = express();
 
 // view engine setup
 app.set('views', path.join(__dirname, 'views'));
 app.set('view engine', 'ejs');
 
 app.use(logger('dev'));
+
+// app.use(bodyParser);
+// app.use(bodyParser.urlencoded());
+// app.use(bodyParser.json());
+app.use(bodyParser.urlencoded({ extended: true }));
+
 app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
 app.use(cookieParser());
