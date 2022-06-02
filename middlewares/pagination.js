@@ -8,11 +8,6 @@ const pagination = async (req, res, next) => {
   const { page, limit } = req.query;
   const offset = page * limit - limit;
 
-  // TODO: to delete after final cheking
-  // console.log('page:', page);
-  // console.log('limit:', limit);
-  // console.log('offset:', offset);
-
   req.pagination = {
     offset,
     limit,

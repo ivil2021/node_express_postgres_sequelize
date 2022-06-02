@@ -1,5 +1,5 @@
 //--- If there is a query - use query, otherwise - get list of news. ---//
-const { Op } = require('sequelize');
+const { Op, QueryTypes } = require('sequelize');
 
 const { sequelize } = require('../models');
 const NewsList = require('../models').NewsList;
@@ -7,7 +7,6 @@ const NewsList = require('../models').NewsList;
 const findByTitle = async (req, res) => {
   try {
     // TODO: to delete after final check
-    // console.log('======================', req.pagination);
     // const page = req.pagination.page;
     // const limit = req.pagination.limit;
     // const offset = req.pagination.offset;
@@ -39,11 +38,22 @@ const findByTitle = async (req, res) => {
       const condition = { news_title: { [Op.iLike]: `%${title}%` } };
       requestedNews = await NewsList.findAll({ where: condition });
       res.status(200).send(requestedNews);
-      // } else {
     }
-    requestedNews = await sequelize.query(query);
-    // TODO: to ask Arina about zero element of array requestedNews[0]
-    result = { page, limit, offset, ...requestedNews[0] };
+    
+    // { type: QueryTypes.SELECT } HELPED TO GET NEWS WITHOUT USELESS DATA
+    // google raw queries
+    // https://sequelize.org/docs/v6/core-concepts/raw-queries/
+    requestedNews = await sequelize.query(query, { type: QueryTypes.SELECT });
+
+    // Getting the list of all news
+    let listOfAllNews = await NewsList.findAll();
+    // count = the length of listOfAllNews array
+    let count = listOfAllNews.length;
+    console.log('count: ', count);
+
+    result = { page, limit, offset, count, requestedNews };
+    console.log('result from findByTitle: ', result);
+
     res.status(200).send(result);
     // }
 
