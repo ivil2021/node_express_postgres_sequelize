@@ -17,7 +17,6 @@ module.exports = (sequelize, DataTypes) => {
     {
       news_title: DataTypes.STRING,
       news_text: DataTypes.STRING,
-      news_date: DataTypes.DATE,
     },
     {
       sequelize,

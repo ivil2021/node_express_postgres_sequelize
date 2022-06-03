@@ -21,12 +21,22 @@ const findByTitle = async (req, res) => {
     // res.status(200).send(news);
     ////////////////////////////////
 
+    // const query = `
+    //   SELECT *
+    //   FROM "NewsList"
+    //   ORDER BY "NewsList"."id"
+    //   LIMIT ${req.pagination.limit}
+    //   OFFSET ${req.pagination.offset};
+    // `;
+
     const query = `
-      SELECT *
-      FROM "NewsList"
-      ORDER BY "NewsList"."id"
-      LIMIT ${req.pagination.limit}
-      OFFSET ${req.pagination.offset};
+    WITH DATA AS (
+      SELECT "id", COUNT(*) AS count FROM "NewsList" GROUP BY "id"
+    ) SELECT *
+    FROM "NewsList"
+    ORDER BY "NewsList"."id"
+    LIMIT ${req.pagination.limit}
+    OFFSET ${req.pagination.offset};
     `;
 
     const title = req.query.title;
@@ -39,20 +49,22 @@ const findByTitle = async (req, res) => {
       requestedNews = await NewsList.findAll({ where: condition });
       res.status(200).send(requestedNews);
     }
-    
+
     // { type: QueryTypes.SELECT } HELPED TO GET NEWS WITHOUT USELESS DATA
     // google raw queries
     // https://sequelize.org/docs/v6/core-concepts/raw-queries/
     requestedNews = await sequelize.query(query, { type: QueryTypes.SELECT });
 
     // Getting the list of all news
-    let listOfAllNews = await NewsList.findAll();
     // count = the length of listOfAllNews array
-    let count = listOfAllNews.length;
+    let listOfAllNews = await NewsList.findAll();
+    // let count = listOfAllNews.length;
+
+    let count = await NewsList.count();
     console.log('count: ', count);
 
     result = { page, limit, offset, count, requestedNews };
-    console.log('result from findByTitle: ', result);
+    // console.log('result from findByTitle: ', result);
 
     res.status(200).send(result);
     // }
