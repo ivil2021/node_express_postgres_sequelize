@@ -154,4 +154,224 @@ at the end we need to push the reference or type heroku open
 heroku open 
 
 
+-------------------------------------------
+-------------------------------------------
+https://devcenter.heroku.com/articles/heroku-postgresql#connecting-to-heroku-postgres
 
+heroku addons in terminal
+No add-ons for app salty-fjord-65228.
+
+heroku addons:create heroku-postgresql:<PLAN_NAME>
+heroku addons:create heroku-postgresql:hobby-dev
+
+heroku addons:create heroku-postgresql:hobby-dev
+Creating heroku-postgresql:hobby-dev on ⬢ salty-fjord-65228... free
+Database has been created and is available
+ ! This database is empty. If upgrading, you can transfer
+ ! data from another database with pg:copy
+Created postgresql-elliptical-02792 as DATABASE_URL
+Use heroku addons:docs heroku-postgresql to view documentation
+
+https://dashboard.heroku.com/apps/salty-fjord-65228/activity
+go to Resources
+right click on heroku postgres / open in new Window
+https://data.heroku.com/datastores/8f0a4fa5-fcec-4b91-841c-6bd6079ef63e
+
+settings / view credentials
+ADMINISTRATION
+Database Credentials
+Get credentials for manual connections to this database.
+
+Cancel
+Please note that these credentials are not permanent.
+
+Heroku rotates credentials periodically and updates applications where this database is attached.
+
+Host
+ec2-52-86-115-245.compute-1.amazonaws.com
+Database
+d2t21finm4qipn
+User
+xhegyxcvfkfbeg
+Port
+5432
+Password
+a8977b67913c4f7a45d1e7cb1b4acfa9d85e364ba4e6929151f3923ae6715712
+URI
+postgres://xhegyxcvfkfbeg:a8977b67913c4f7a45d1e7cb1b4acfa9d85e364ba4e6929151f3923ae6715712@ec2-52-86-115-245.compute-1.amazonaws.com:5432/d2t21finm4qipn
+Heroku CLI
+heroku pg:psql postgresql-elliptical-02792 --app salty-fjord-65228
+
+---------------
+https://dashboard.heroku.com/apps/salty-fjord-65228/resources
+attached as database
+
+
+----------------
+INSERT INTO news (id, news_title, news_text, createdAt, updatedAt)  
+VALUES (1, title1, text1);
+
+CREATE TABLE news
+(id integer, news_title character varying (255), news_text character varying (255))
+
+
+//---02.06.2022---//
+    // { type: QueryTypes.SELECT } HELPED TO GET NEWS WITHOUT USELESS DATA
+    // google raw queries
+    // https://sequelize.org/docs/v6/core-concepts/raw-queries/
+    requestedNews = await sequelize.query(query, { type: QueryTypes.SELECT });
+
+//---08.06.2022---//
+PAGINATION
+const NewsList = require('../models').NewsList;
+
+const pagination = async (req, res, next) => {
+  // TODO: to delete after final cheking
+  // const page  = req.query.page;
+  // const limit = req.query.limit;
+  // It's the same, but in one row.
+  const { page, limit } = req.query;
+  const offset = page * limit - limit;
+
+  req.pagination = {
+    offset,
+    limit,
+    page,
+  };
+
+  next();
+};
+
+module.exports = pagination;
+---------------------------
+
+//--- Route for finding news by query. If there is no query - get list of news . ---//
+//--- NEED TO MOVE IT UP AND ADD MORE SPECIFIC PREFIX. ---//
+// http://localhost:3000/news/find-by-title (without query)
+// http://localhost:3000/news/find-by-title?title=hot (with query - title = hot)
+---------------------------------------
+
+findByTitle.js
+//--- If there is a query - use query, otherwise - get list of news. ---//
+const { Op, QueryTypes } = require('sequelize');
+
+const { sequelize } = require('../models');
+const NewsList = require('../models').NewsList;
+
+const findByTitle = async (req, res) => {
+  try {
+    // console.log('req from find by title back: ', req);
+    // TODO: to delete after final check
+    // const page = req.pagination.page;
+    // const limit = req.pagination.limit;
+    // const offset = req.pagination.offset;
+    const { page, limit, offset } = req.pagination;
+
+    // TODO: TO UNDERSTAND
+    // 1 OPTION
+    ////////////////////////////////
+    // const title = req.query.title;
+    // const condition = title ? { news_title: { [Op.iLike]: `%${title}%` } } : null;
+    // const news = await NewsList.findAll({ where: condition });
+    // res.status(200).send(news);
+    ////////////////////////////////
+
+    // const query = `
+    //   SELECT *
+    //   FROM "NewsList"
+    //   ORDER BY "NewsList"."id"
+    //   LIMIT ${req.pagination.limit}
+    //   OFFSET ${req.pagination.offset};
+    // `;
+
+    const title = req.query.title;
+    let requestedNews;
+    let result;
+    const filterCondition = title ? `WHERE "news_title" = '${title}'` : '';
+
+    // const query = `
+    // WITH DATA AS (
+    //   SELECT count(*) AS "count" FROM "NewsList"
+    //   GROUP BY "id"
+    // ) SELECT *
+    // FROM "NewsList"
+    // ${filterCondition}
+    // ORDER BY "NewsList"."id"
+    // LIMIT ${req.pagination.limit}
+    // OFFSET ${req.pagination.offset};
+    // `;
+
+    const query = `
+    SELECT *
+    FROM "NewsList"
+    ${filterCondition}
+    ORDER BY "NewsList"."id"
+    LIMIT ${req.pagination.limit}
+    OFFSET ${req.pagination.offset};
+    `;
+
+    const countQuery = `SELECT count(*) AS "count" FROM "NewsList" ${filterCondition}`;
+
+    // if (title) {
+    //   // const condition = title ? { news_title: { [Op.iLike]: `%${title}%` } } : null;
+    //   const condition = { news_title: { [Op.iLike]: `%${title}%` } };
+    //   requestedNews = await NewsList.findAll({ where: condition });
+    //   res.status(200).send(requestedNews);
+    // }
+
+    // { type: QueryTypes.SELECT } HELPED TO GET NEWS WITHOUT USELESS DATA
+    // google raw queries
+    // https://sequelize.org/docs/v6/core-concepts/raw-queries/
+    requestedNews = await sequelize.query(query, { type: QueryTypes.SELECT });
+    const count = await sequelize.query(countQuery, {
+      type: QueryTypes.SELECT,
+    });
+
+    let listOfAllNews = await NewsList.findAll();
+
+    // let count = await NewsList.count();
+    console.log('----------------------count: ', count[0].count);
+
+    result = { page, limit, offset, count: count[0].count, requestedNews };
+    // console.log('result from findByTitle: ', result);
+
+    res.status(200).send(result);
+    // }
+
+    // const requestedNews = await sequelize.query(query);
+    // const result = {page, limit, offset, ...requestedNews[0]};
+    // res.status(200).send(result);
+
+    // TODO: TO UNDERSTAND
+    // 2 OPTION
+    // if (req.query.title) {
+    //   const news = await NewsList.findAll({
+    //     // where: { news_title: req.query.title },
+    //     // where: { news_text: req.query.text },
+    //     where: { news_title: { [Op.iLike]: `%${req.query.title}%` } },
+    //   });
+    //   res.status(200).send(news);
+    // } else {
+    //   const news = await NewsList.findAll();
+    //   res.status(200).send(news);
+    // }
+
+    // TODO: TO UNDERSTAND
+    // 3 OPTION
+    // let condition = { where: null };
+    // if (req.query.title) {
+    //   condition = { where: { news_title: { [Op.iLike]: `%${req.query.title}%` } } }
+    // }
+    // const news = await NewsList.findAll(condition);
+    // res.status(200).send(news);
+
+    // TODO: TO UNDERSTAND
+    // 4 OPTION
+    // res.status(200).send(await NewsList.findAll({ where: req.query.title ? { news_title: { [Op.iLike]: `%${req.query.title}%` } } : null }));
+  } catch (e) {
+    // console.log('err', e);
+  }
+};
+
+module.exports = findByTitle;
+--------------------------

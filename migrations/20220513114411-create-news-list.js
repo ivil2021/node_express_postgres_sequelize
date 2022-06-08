@@ -14,9 +14,6 @@ module.exports = {
       news_text: {
         type: Sequelize.STRING,
       },
-      news_date: {
-        type: Sequelize.DATE,
-      },
       createdAt: {
         allowNull: false,
         type: Sequelize.DATE,

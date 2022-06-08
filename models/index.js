@@ -1,6 +1,7 @@
 'use strict';
 
 const fs = require('fs');
+
 const path = require('path');
 const Sequelize = require('sequelize');
 const basename = path.basename(__filename);
@@ -16,6 +17,15 @@ sequelize = new Sequelize(
   config.password,
   config
 );
+const connectionString = `postgres://${config.username}:${config.password}@${config.host}:${config.port}/${config.database}`;
+// console.log('============');
+// console.log(config);
+// const sequelize = new Sequelize('postgres://user:pass@example.com:5432/dbname');
+// const sequelize = new Sequelize(connectionString,
+//   {
+//     dialect: 'postgres',
+//   }
+// );
 
 fs.readdirSync(__dirname)
   .filter((file) => {
