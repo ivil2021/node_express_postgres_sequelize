@@ -1,4 +1,4 @@
-//--- Getting one news by id. ---//
+//--- Deleting one news by id. ---//
 const NewsList = require('../models').NewsList;
 
 const deleteOneNews = async (req, res) => {

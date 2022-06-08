@@ -15,13 +15,9 @@ const pagination = require('../middlewares/pagination');
 // post https:/localhost:300/news
 router.post('/', addNews);
 
-//--- Route for finding news by query. If there is no query - get list of news . ---//
-//--- NEED TO MOVE IT UP AND ADD MORE SPECIFIC PREFIX. ---//
-// http://localhost:3000/news/find-by-title (without query)
-// http://localhost:3000/news/find-by-title?title=hot (with query - title = hot)
-
+//--- Route for getting news by title or getting all news. ---//
 // router.get('/find-by-title', pagination, findByTitle);
-//  pagination - middleware.
+// pagination - middleware.
 router.get('/find-by-title', pagination, findByTitle);
 
 //--- Route for getting one news by id. ---//

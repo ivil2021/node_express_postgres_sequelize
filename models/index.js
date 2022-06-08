@@ -18,8 +18,8 @@ sequelize = new Sequelize(
   config
 );
 const connectionString = `postgres://${config.username}:${config.password}@${config.host}:${config.port}/${config.database}`;
-console.log('============');
-console.log(config);
+// console.log('============');
+// console.log(config);
 // const sequelize = new Sequelize('postgres://user:pass@example.com:5432/dbname');
 // const sequelize = new Sequelize(connectionString,
 //   {

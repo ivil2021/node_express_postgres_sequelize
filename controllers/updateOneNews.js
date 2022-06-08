@@ -1,4 +1,4 @@
-//--- Getting one news by id. ---//
+//--- Updating one news by id. ---//
 const NewsList = require('../models').NewsList;
 
 const updateOneNews = async (req, res) => {
