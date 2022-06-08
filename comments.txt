@@ -375,3 +375,24 @@ const findByTitle = async (req, res) => {
 
 module.exports = findByTitle;
 --------------------------
+
+//---08.06.2022---//
+git status
+git add .
+git commit -m "..."
+git push origin heroku-setup
+
+Сделал pull request
+Сделал merge pull request ветки connect-with-server с веткой master
+
+git checkout master // в оффлайне перешел на ветку мастер
+git pull // get the latest updates from github
+checked that news_list app works // проверил, что приложение работает
+
+Delete connect-with-server in git hub // удалил удаленную ветку на гитхаб
+
+git branch -d connect-with-server // Delete local branch connect-with-server
+---------------------------
+
+git checkout -b abc // Create new branch abc and switched to it
+
